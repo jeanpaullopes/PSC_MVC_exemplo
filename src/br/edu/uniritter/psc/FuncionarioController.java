@@ -6,7 +6,8 @@ public class FuncionarioController {
     FuncionarioView view;
 
     public FuncionarioController() {
-        this.db = new FuncionarioDB();
+        this.db = FuncionarioDB.getInstance();
+        FuncionarioDB db1 = FuncionarioDB.getInstance();
         this.view = new FuncionarioView();
     }
 

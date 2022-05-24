@@ -1,6 +1,9 @@
 package br.edu.uniritter.psc;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +17,20 @@ public class FuncionarioFile {
         if (! dir.exists() ) {
             dir.mkdir();
         }
+        try {
+            this.divisao(1, 0);
+        } catch (ArithmeticException ex) {
+            System.out.println("deu ruim. "+ex.getMessage());
+        }
+    }
+
+
+    private int divisao(int dividendo, int divisor) throws ArithmeticException {
+        if (divisor == 0) {
+            ArithmeticException exception =  new ArithmeticException();
+            throw exception;
+        }
+        return  dividendo / divisor ;
     }
     private String converteFuncionarioCSV(Funcionario funcionario) {
         return  funcionario.getId()+";"+
@@ -23,6 +40,21 @@ public class FuncionarioFile {
                 funcionario.getCargo().getId()+";"+
                 (funcionario.getDepartamento() != null ? funcionario.getDepartamento().getId() : 0)+";"+
                 "\n";
+    }
+    private Funcionario converteCSVFuncionario(String linha) {
+        String[] campos = linha.split(";");
+        FuncionarioDB db = FuncionarioDB.getInstance();
+        Funcionario f = new Funcionario(
+                Integer.parseInt(campos[0]),
+                Integer.parseInt(campos[1]),
+                campos[2],
+                db.getCargo( Integer.parseInt(campos[4])) ,
+                Float.parseFloat(campos[3])
+        );
+        if (campos.length >= 6) {
+            f.setDepartamento(db.getDepartamento(Integer.parseInt(campos[5])));
+        }
+        return f;
     }
     public void salvaFuncionarios(List<Funcionario> lista) {
         File arquivo = new File(DIR_ARQ+"/"+NOME_ARQ);
@@ -43,9 +75,9 @@ public class FuncionarioFile {
         }
     }
 
-    public List<Funcionario> carregarFuncionarios(FuncionarioDB db) {
+    public List<Funcionario> carregarFuncionarios() {
         File arquivo = new File(DIR_ARQ+"/"+NOME_ARQ);
-
+        FuncionarioDB db = FuncionarioDB.getInstance();
         if (!arquivo.exists()) {
             return null;
         }
@@ -54,15 +86,7 @@ public class FuncionarioFile {
             Scanner fileScanner = new Scanner(arquivo);
             while (fileScanner.hasNextLine()) {
                 String linha = fileScanner.nextLine();
-                String[] campos = linha.split(";");
-                Funcionario f = new Funcionario(
-                                        Integer.parseInt(campos[0]),
-                        Integer.parseInt(campos[1]),
-                        campos[2],
-                        db.getCargos().get( Integer.parseInt(campos[4]) - 1),
-                        Float.parseFloat(campos[3])
-                        );
-                retorno.add(f);
+                retorno.add(converteCSVFuncionario(linha));
             }
         fileScanner.close();
         } catch (FileNotFoundException e) {
