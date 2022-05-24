@@ -17,21 +17,11 @@ public class FuncionarioFile {
         if (! dir.exists() ) {
             dir.mkdir();
         }
-        try {
-            this.divisao(1, 0);
-        } catch (ArithmeticException ex) {
-            System.out.println("deu ruim. "+ex.getMessage());
-        }
+
     }
 
 
-    private int divisao(int dividendo, int divisor) throws ArithmeticException {
-        if (divisor == 0) {
-            ArithmeticException exception =  new ArithmeticException();
-            throw exception;
-        }
-        return  dividendo / divisor ;
-    }
+
     private String converteFuncionarioCSV(Funcionario funcionario) {
         return  funcionario.getId()+";"+
                 funcionario.getMatricula()+";"+
@@ -86,7 +76,10 @@ public class FuncionarioFile {
             Scanner fileScanner = new Scanner(arquivo);
             while (fileScanner.hasNextLine()) {
                 String linha = fileScanner.nextLine();
-                retorno.add(converteCSVFuncionario(linha));
+                Funcionario f = converteCSVFuncionario(linha);
+                retorno.add(f);
+                db.setIdAtual(f.getId());
+
             }
         fileScanner.close();
         } catch (FileNotFoundException e) {
