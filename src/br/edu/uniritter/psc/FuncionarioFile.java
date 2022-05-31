@@ -23,7 +23,8 @@ public class FuncionarioFile {
 
 
     private String converteFuncionarioCSV(Funcionario funcionario) {
-        return  funcionario.getId()+";"+
+        return  funcionario.getClass().getName()+";"+
+                funcionario.getId()+";"+
                 funcionario.getMatricula()+";"+
                 funcionario.getNome()+";"+
                 funcionario.getSalario()+";"+
@@ -34,17 +35,21 @@ public class FuncionarioFile {
     private Funcionario converteCSVFuncionario(String linha) {
         String[] campos = linha.split(";");
         FuncionarioDB db = FuncionarioDB.getInstance();
-        Funcionario f = new Funcionario(
-                Integer.parseInt(campos[0]),
-                Integer.parseInt(campos[1]),
-                campos[2],
-                db.getCargo( Integer.parseInt(campos[4])) ,
-                Float.parseFloat(campos[3])
-        );
-        if (campos.length >= 6) {
-            f.setDepartamento(db.getDepartamento(Integer.parseInt(campos[5])));
+        if (campos[0].equals("br.edu.uniritter.psc.Funcionario")) {
+            Funcionario f = new Funcionario(
+                    Integer.parseInt(campos[1]),
+                    Integer.parseInt(campos[2]),
+                    campos[3],
+                    db.getCargo(Integer.parseInt(campos[5])),
+                    Float.parseFloat(campos[4])
+            );
+            if (campos.length >= 7) {
+                f.setDepartamento(db.getDepartamento(Integer.parseInt(campos[6])));
+            }
+            return f;
+        } else {
+            return null;
         }
-        return f;
     }
     public void salvaFuncionarios(List<Funcionario> lista) {
         File arquivo = new File(DIR_ARQ+"/"+NOME_ARQ);
@@ -69,7 +74,7 @@ public class FuncionarioFile {
         File arquivo = new File(DIR_ARQ+"/"+NOME_ARQ);
         FuncionarioDB db = FuncionarioDB.getInstance();
         if (!arquivo.exists()) {
-            return null;
+            return new ArrayList<Funcionario>();
         }
         List<Funcionario> retorno = new ArrayList<>();
         try {

@@ -1,5 +1,7 @@
 package br.edu.uniritter.psc;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +30,7 @@ public class FuncionarioView {
         System.out.println("--------------------------------");
     }
 
-    public Funcionario displayFormularioFuncionario(List<Cargo> cargos){//(Funcionario funcionario) {
+    public Funcionario displayFormularioFuncionario(Collection<Cargo> cargos){//(Funcionario funcionario) {
 
         System.out.println("Informe o Nome: ");
         String nome = scanner.nextLine();
@@ -45,13 +47,18 @@ public class FuncionarioView {
         return f;
     }
 
-    public Cargo selecionaCargo(List<Cargo> cargos) {
-        for (int i = 0; i < cargos.size(); i++) {
-            System.out.println(i+" -> "+cargos.get(i).getDescricao());
+    public Cargo selecionaCargo(Collection<Cargo> cargos) {
+        //for(Cargo c : cargos) {
+        //
+        //}
+        List<Cargo>lista = new ArrayList<>();
+        lista.addAll(cargos);
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(i+" -> "+lista.get(i).getDescricao());
         }
         System.out.println("Selecione o cargo:");
         int c = scanner.nextInt();
 
-        return cargos.get(c);
+        return lista.get(c);
     }
 }

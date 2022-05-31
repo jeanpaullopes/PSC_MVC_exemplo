@@ -22,4 +22,9 @@ public class FuncionarioController {
     public void listarSemSalario() {
         view.listarSemSalario(db.getTodosFuncionarios());
     }
+    public void alterarFuncionario() {
+        db.getTodosFuncionarios().get(10).setSalario(9999);
+        db.salvarNoBD();
+
+    }
 }

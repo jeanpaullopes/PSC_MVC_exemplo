@@ -23,4 +23,16 @@ public class Cargo {
     public float getPisoSalarial() {
         return pisoSalarial;
     }
+
+    public void setPisoSalarial(float pisoSalarial) {
+        this.pisoSalarial = pisoSalarial;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    @Override
+    public String toString() {
+        return this.id+" ->"+descricao+"  R$ "+pisoSalarial;
+    }
 }

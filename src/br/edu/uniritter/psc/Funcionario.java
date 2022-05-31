@@ -1,49 +1,29 @@
 package br.edu.uniritter.psc;
 
-public class Funcionario {
-    private int id;
-    private int matricula;
-    private String nome;
+public class Funcionario extends Pessoa{
     private float salario;
     private Cargo cargo;
     private Departamento departamento;
 
 
     public Funcionario(int id, int matricula, String nome, Cargo cargo, float salario) {
-        this.id = id;
-        this.matricula = matricula;
-        this.nome = nome;
-        this.salario = salario;
+        super(id, matricula, nome);
+        //this.setId(id);
+        //this.matricula = matricula;
+        //this.nome = nome;
         this.cargo = cargo;
-        if (this.salario < this.cargo.getPisoSalarial()) {
-            this.salario = cargo.getPisoSalarial();
-        }
+        this.setSalario(salario);
+
     }
 
     @Override
     public boolean equals(Object obj) {
+
         if (obj instanceof Funcionario) {
-            return this.id == ((Funcionario) obj).getId();
+            return getId() == ((Funcionario) obj).getId();
         } else {
             return false;
         }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getMatricula() {
-        return matricula;
-    }
-
-
-    public String getNome() {
-        return nome;
     }
 
 
@@ -54,6 +34,9 @@ public class Funcionario {
 
     public void setSalario(float salario) {
         this.salario = salario;
+        if (this.salario < this.cargo.getPisoSalarial()) {
+            this.salario = cargo.getPisoSalarial();
+        }
     }
 
     public Cargo getCargo() {

@@ -30,6 +30,9 @@ public class MenuController {
             case 3:
                 funcionarioController.listarSemSalario();
                 break;
+            case 4:
+                funcionarioController.alterarFuncionario();
+                break;
             case 0:
                 System.exit(0);
         }

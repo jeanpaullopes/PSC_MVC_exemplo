@@ -1,7 +1,9 @@
 package br.edu.uniritter.psc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -9,6 +11,50 @@ public class Main {
 	// write your code here
         MenuController menuController = new MenuController();
         menuController.run();
+        /*
+        Cargo c = new Cargo(1, "Prof. Nv.1", 1200f);
+        Cargo c2 = new Cargo(2, "Prof. Nv.2", 1200f);
+        Funcionario f =  new Funcionario(1,123, "func", c, 500f);
+        System.out.println("antes do aumento: " +f.getNome()+" "+f.getSalario());
+        c.setPisoSalarial(400);
+        f.setSalario(f.getSalario());
+        Pessoa p = new Aluno(1,1,"o jean", "ADS");
+        Pessoa p1 = f;
+        System.out.println("Depois do aumento: " +f.getNome()+" "+f.getSalario());
+
+        List<Cargo> cargos = new ArrayList<>();
+        Map<Integer, Cargo> mapaCargos = new HashMap<>();
+
+        cargos.add(c);
+        cargos.add(c2);
+        if (! cargos.contains(c)) {
+            cargos.add(c);
+        }
+        cargos.add(c);
+        cargos.add(c2);
+        cargos.add(c);
+        cargos.add(c2);
+
+        mapaCargos.put(c.getId(), c);
+        mapaCargos.put(c2.getId(), c2);
+        //if (!mapaCargos.containsValue(c)) {
+            mapaCargos.put(666, c);
+        //}
+        mapaCargos.put(666, c2);
+        System.out.println(mapaCargos);
+        for (int i = 0; i < cargos.size(); i++) {
+            System.out.println(cargos.get(i).getId()+"  -> "+cargos.get(i).getDescricao());
+            cargos.get(0).setDescricao(cargos.get(i).getDescricao()+"a");
+
+        }
+        System.out.println("======");
+        for (int i = 0; i < cargos.size(); i++) {
+            System.out.println(cargos.get(i).getDescricao());
+        }
+
+
+         */
+
         /*
         FuncionarioDB funcionarioDB = new FuncionarioDB();
         // troquei pelo FuncionarioDB
